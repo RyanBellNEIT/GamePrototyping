@@ -1,8 +1,9 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height/2;
+var x = Math.floor(Math.random() * 762) + 100;
+var y = Math.floor(Math.random() * 650) + 10;
 var vx = 2;
+var vy = -2;
 var radius = 50
 
 function animate() {
@@ -12,7 +13,8 @@ function animate() {
 	ctx.fillStyle = "#5A00FF";
 	ctx.fill();
 	ctx.closePath();
-	x += vx;
+	x += 1*vx;
+	y += 1*vy;
 
 	if (x + vx > canvas.width-radius)
 	{
@@ -22,6 +24,16 @@ function animate() {
 	if (x + vx < 0+radius)
 	{
 		vx = -vx
+	}
+
+	if (y + vy > canvas.height - radius)
+	{
+		vy = -vy
+	}
+
+	if (y + vy < 0+radius)
+	{
+		vy = -vy
 	}
 }
 
