@@ -6,7 +6,6 @@ var d = false;
 document.addEventListener("keydown", press);
 document.addEventListener("keyup", release);
 
-onkeydown
 //Event Functions
 function press(e)
 {
