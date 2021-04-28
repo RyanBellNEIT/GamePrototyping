@@ -1,107 +1,96 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var rectY = 300
-var rectX = 50
-var x = canvas.width/2;
-var y = canvas.height/2;
-var vx = 2;
-var vy = -2;
-var radius = 30
-var up = false;
-var down = false;
-var left = false;
-var right = false;
-
-function animate() 
+// JavaScript Document
+function GameObject(x,y,w,h,color)
 {
-
-	ctx.clearRect(0,0,canvas.width, canvas.height);
-
-	ctx.beginPath();
-	ctx.fillRect(rectX, rectY, 25, 100)
-	ctx.fillStyle = "#00FFF9";
-	ctx.fill();
-	ctx.closePath();
-
-	ctx.beginPath();
-	ctx.arc(x, y, radius, 0, Math.PI*2);
-	ctx.fillStyle = "#5A00FF";
-	ctx.fill();
-	ctx.closePath();
-	x += 1*vx;
-	y += 1*vy;
-
-	if (x + vx > canvas.width-radius)
-	{
-		vx = -vx
-		counter++
-	}
-
-	if (x + vx < 0+radius)
-	{
-		vx = -vx
-		counter++
-	}
-
-	if (y + vy > canvas.height - radius)
-	{
-		vy = -vy
-		counter++
-	}
-
-	if (y + vy < 0+radius)
-	{
-		vy = -vy
-		counter++
-	}
-
-	/*if (x - radius < rectX)
-	{
-		vx = -vx
-	}*/
-
-	if(up){
-		rectY += -2;
-	}
-	if(down){
-		rectY += 2;
-	}
+	
+	//Default Values
+	if(x == undefined)
+		this.x = canvas.width/2;
+	else 
+		this.x = x;
+	if(y == undefined)
+		this.y = canvas.height/2;
+	else 
+		this.y = y;
+	
+	if(w == undefined)
+		this.width = 25;
+	else 
+		this.width = w;
+	if(h == undefined)
+		this.height = 100;
+	else 
+		this.height = h;
+	
+		//player's color
+	if(color == undefined)
+		this.color = "#ff0000";
+	else 
+		this.color = color;
+	
+	//Gameobject's velocity or speed on each axis
+	this.vx = 0;
+	this.vy = 0;
 
 	
-	ctx.drawRect(rectX,rectY,25, 100);
-}
-
-	document.addEventListener("keydown", press);
-	document.addEventListener("keyup", release);
-
-	function press(e)
+	
+	//This draws the player to the screen
+	this.drawRect = function()
 	{
-		if(e.keyCode == 87)
-		{
-			console.log("Moving Up");
-			up = true;
-		}
-
-		if(e.keyCode == 83)
-		{
-			console.log("Moving Down");
-			down = true;
-		}
+		context.save();
+			context.fillStyle = this.color;
+			context.translate(this.x, this.y);
+			context.fillRect((-this.width/2), (-this.height/2), this.width, this.height);
+		context.restore();
+		
+	}	
+	
+	this.drawCircle = function()
+	{
+		context.save();
+			context.fillStyle = this.color;
+			context.beginPath();
+			context.translate(this.x, this.y);
+			context.arc(0, 0, this.width/2, 0, 360 *Math.PI/180, true);
+			context.closePath();
+			context.fill();
+		context.restore();
+	}	
+	
+	//This changes the player's position
+	this.move = function()
+	{
+		this.x += this.vx;
+		this.y += this.vy;
 	}
-
-function release(e){
-	if(e.keyCode == 87)
-		{
-			console.log("Moving Up");
-			up = false;
-		}
-
-		if(e.keyCode == 83)
-		{
-			console.log("Moving Down");
-			down = false
-		}
+	
+	this.left = function() 
+	{
+		return this.x - this.width/2;
 	}
-
-
-setInterval(animate, 10);
+	this.right = function() 
+	{
+		return this.x + this.width/2;
+	}
+	
+	this.top = function() 
+	{
+		return this.y - this.height/2;
+	}
+	this.bottom = function() 
+	{
+		return this.y + this.height/2;
+	}
+	
+	this.hitTestObject = function(obj)
+	{
+		if(this.left() < obj.right() && 
+		   this.right() > obj.left()&& 
+		   this.top() < obj.bottom() && 
+		   this.bottom() > obj.top())
+		{
+			return true
+		}
+		return false;
+	}
+	
+}
