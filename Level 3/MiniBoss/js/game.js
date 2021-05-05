@@ -10,7 +10,9 @@ var vy = 10;
 var PlayerWins = 0;
 var Player2Wins = 0;
 var img = new Image()//document.getElementById("ric");
+var img2 = new Image()
 img.src = "../../images/Ric.png"
+img2.src = "../../images/space.jpg"
 img.onload = function(){
 	animate()
 }
@@ -31,8 +33,8 @@ var prevX;
 	player2.x = 900;
 	
 
-	ball.vx = 4;
-	ball.vy = -4;
+	ball.vx = 10;
+	ball.vy = -10;
 	ball.width = 30;
 
 	//Set the Animation Timer
@@ -42,6 +44,8 @@ function animate()
 {
 	//Erase the Screen
 	context.clearRect(0,0,canvas.width, canvas.height);	
+
+	context.drawImage(img2, 0, 0);
 
 	//Moves the ball
 	ball.x += ball.vx;
@@ -137,17 +141,17 @@ function animate()
 	{
 		if(ball.y < player.y - player.height/6)
 		{
-			ball.vx = 4;
-			ball.vy = -4;
+			ball.vx = 10;
+			ball.vy = -10;
 		}
 		else if(ball.y > player.y + player.height/6)
 		{
-			ball.vx = 4;
-			ball.vy = 4;
+			ball.vx = 10;
+			ball.vy = 10;
 		}
 		else
 		{
-			ball.vx = 4;
+			ball.vx = 10;
 			ball.vy = 0;
 		}
 	}
@@ -156,22 +160,23 @@ function animate()
 	{
 		if(ball.y < player2.y - player2.height/6)
 		{
-			ball.vx = -4;
-			ball.vy = 4;
+			ball.vx = -10;
+			ball.vy = 10;
 		}
 		else if(ball.y > player2.y + player2.height/6)
 		{
-			ball.vx = -4;
-			ball.vy = 4;
+			ball.vx = -10;
+			ball.vy = 10;
 		}
 		else
 		{
-			ball.vx = -4;
+			ball.vx = -10;
 			ball.vy = 0;
 		}
 	}
 
 	//Draws score to the screen
+	context.fillStyle = "white";
 	ctx.font = "20px Georgia";
 	ctx.fillText(PlayerWins, 546, 50);
 	ctx.font = "20px Georgia";
