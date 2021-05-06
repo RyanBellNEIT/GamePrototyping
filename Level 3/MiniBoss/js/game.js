@@ -9,9 +9,9 @@ var player;
 var vy = 10;
 var PlayerWins = 0;
 var Player2Wins = 0;
-var img = new Image()//document.getElementById("ric");
+var img = new Image()
 var img2 = new Image()
-img.src = "../../images/Ric.png"
+img.src = "../../images/baby.png"
 img2.src = "../../images/space.jpg"
 img.onload = function(){
 	animate()
@@ -32,7 +32,6 @@ var prevX;
 	player.x = 100;
 	player2.x = 900;
 	
-
 	ball.vx = 10;
 	ball.vy = -10;
 	ball.width = 30;
@@ -51,7 +50,9 @@ function animate()
 	ball.x += ball.vx;
 	ball.y += ball.vy;
 
-	context.save();
+	//Draws the net.
+	
+	/*context.save();
 	context.strokeStyle = "#FF0000"
 	context.beginPath();
 	context.moveTo(canvas.width/2, 0);
@@ -59,7 +60,7 @@ function animate()
 	context.closePath();
 	context.lineWidth = 4;
 	context.stroke();
-	context.restore();
+	context.restore();*/
 
 	if (ball.y < 0 + 30)
 	{
@@ -94,7 +95,7 @@ function animate()
 		
 		if (player.y < 50)
 		{
-			player.y = 50;
+			player.y = 550;
 		}
 	}
 	
@@ -104,7 +105,7 @@ function animate()
 
 		if (player.y > 550)
 		{
-			player.y = 550;
+			player.y = 50;
 		}
 	}
 	else
@@ -119,7 +120,7 @@ function animate()
 		
 		if (player2.y < 50)
 		{
-			player2.y = 50;
+			player2.y = 550;
 		}
 	}
 	
@@ -129,7 +130,7 @@ function animate()
 
 		if (player2.y > 550)
 		{
-			player2.y = 550;
+			player2.y = 50;
 		}
 	}
 	else
@@ -185,7 +186,18 @@ function animate()
 	ctx.fillText("Player 1 | Player 2", 435, 20);
 	ctx.font = "20px Georgia";
 	ctx.fillText("-", 508, 50);
+
+	if (PlayerWins > 4)
+	{
+		PlayerWins = 0;
+		Player2Wins = 0;
+	}
 	
+	if (Player2Wins > 4)
+	{
+		PlayerWins = 0;
+		Player2Wins = 0;
+	}
 
 	//Update the Screen
 	player.move();
