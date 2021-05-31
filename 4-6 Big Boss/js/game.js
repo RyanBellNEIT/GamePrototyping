@@ -61,6 +61,35 @@ function animate()
 		player.x = 800 - player.width;
 	}
 
+	if(s)
+	{
+		ball.vy = 0;
+		ball2.vy = 0;
+		ball2.vy = 0;
+		ball2.vy = 0;
+		ball2.vy = 0;
+		square.vy = 0;
+		square2.vy = 0;
+		square3.vy = 0;
+		square4.vy = 0;
+		square5.vy = 0;
+		player.vx *= 0;
+	}
+	if(s == false)
+	{
+		ball.vy = -8;
+		ball2.vy = -8;
+		ball2.vy = -8;
+		ball2.vy = -8;
+		ball2.vy = -8;
+		square.vy = -8;
+		square2.vy = -8;
+		square3.vy = -8;
+		square4.vy = -8;
+		square5.vy = -8;
+		player.vx *= .95;
+	}
+
 	if (player.hitTestObject(ball))
 	{
 		player.color = "#FF0000"
