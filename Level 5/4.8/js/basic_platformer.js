@@ -141,12 +141,6 @@ function animate()
 		player.x++;
 		player.vx = 0;
 	}
-
-	
-	//---------Objective: Let Me Out!---------------------------------------------------------------------------------------------------- 
-	//---------Run this program first.
-	//---------Get the pearl to open the door--------------------------------------------------------------------------------------------
-	//---------Hint: you'll need a new variable to keep track of the key-----------------------------------------------------------------
 	
 	if(player.hitTestObject(goal))
 	{

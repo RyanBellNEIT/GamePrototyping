@@ -7,7 +7,7 @@ var timer;
 var interval = 1000/60;
 var player;
 var vy = 10;
-var PlayerWins = 0;
+var score = 0;
 var gravity = 1;
 var force = 3;
 
@@ -44,7 +44,7 @@ function animate()
 
 	ctx.font = "16px Arial"
 	ctx.fillText("Score: ", 25, 40)
-	ctx.fillText(PlayerWins, 75, 40)
+	ctx.fillText(score, 75, 40)
 	ctx.color = "#555555";
 
 	//Moves the ball
@@ -72,7 +72,7 @@ function animate()
 
 	if (ball.y > canvas.height -50)
 	{
-		PlayerWins = 0;
+		score = 0;
 		ball.vy = -ball.vy * .67
 		ball.vx = -ball.vx * .67
 		ball.y = canvas.height - 50
@@ -97,12 +97,21 @@ function animate()
 	{
 		player.x = 1144 - player.width;
 	}
+	if (s)
+	{
+		gravity = .25
+		ball.vy += gravity;
+	}
+	else
+	{
+		gravity = 1;
+	}
 
 	player.vx *= .95;
 
 	if (ball.hitTestObject(player))
 	{
-		PlayerWins++;
+		score++;
 		ball.vy = -20;
 		if(ball.x < player.x - player.width/6)
 		{
