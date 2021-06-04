@@ -12,7 +12,7 @@ var timer = setInterval(animate, interval);
 
 var mouse = {x:0,y:0};
 
-var currentState ="start";
+var currentState ="play2";
 var states = [];
 var balls = [];
 var squares = [];
@@ -128,6 +128,10 @@ states["start"] = function()
 	
 	context.drawImage(image,0,0,canvas.width,canvas.height)
 
+	context.drawImage(asteroid2,110,590,dot.width + 80,dot.height + 20)
+
+	context.drawImage(asteroid2,710,590,dot2.width + 80,dot2.height + 10)
+
 	context.save();
 		context.fillStyle = "white";
 		context.font = "bold 58px Arial"
@@ -139,7 +143,7 @@ states["start"] = function()
 		context.font = "bold 58px Arial"
 		context.textAlign = "center";
 		context.fillStyle = "white";
-		context.fillText("Click either black dot to begin.", canvas.width/2, canvas.height/1.5-450/4)
+		context.fillText("Click either asteroid to begin.", canvas.width/2, canvas.height/1.5-450/4)
 		context.font = "bold 40px Arial"
 		context.fillStyle = "white";
 		context.fillText("Play", 200, 580)
@@ -147,20 +151,19 @@ states["start"] = function()
 		context.fillStyle = "white";
 		context.fillText("Instructions", 800, 580)
 	context.restore();
-	
-	dot.drawCircle();
-	dot2.drawCircle();
-	
 }
 
 states["instructions"] = function()
 {
 	context.drawImage(image,0,0,canvas.width,canvas.height)
 
+	context.drawImage(asteroid2,420,600,dot.width + 70,dot.height + 10)
+
 context.save();
 	context.font = "bold 40px Arial"
 	context.fillStyle = "white";
-	context.fillText("Instructions", canvas.width/2-125, canvas.height/2 - 350)
+	context.fillText("Instructions:", canvas.width/2-400, canvas.height/2 - 360)
+	context.fillText("Beat each game to progress.", canvas.width/2-150, canvas.height/2 - 360)
 	context.strokeStyle = 'black';
 	context.lineWidth = 10;
 	//Lines
@@ -183,8 +186,8 @@ context.save();
 	context.fillText("Game 1", 5, 90)
 	context.fillText("-A and D to move.", 30, 140)
 	context.fillText("-P to pause.", 30, 170)
-	context.fillText("-Hit green squares.", 30, 200)
-	context.fillText("-Avoid red circles.", 30, 230)
+	context.fillText("-Hit the emeralds.", 30, 200)
+	context.fillText("-Avoid asteroids.", 30, 230)
 	context.fillText("-Get 30 points to win.", 30, 260)
 	//Game 2 Instructions
 	context.font = "bold 20px Arial"
@@ -206,7 +209,7 @@ context.save();
 	context.fillText("-A and D to move.", 535, 380)
 	context.fillText("-S to slow down the ball.", 535, 410)
 	context.fillText("-Don't let ball hit bottom of screen.", 535, 440)
-	context.fillText("-Get 10 points to win.", 535, 470)
+	context.fillText("-Get 20 points to win.", 535, 470)
 
 context.restore();
 
@@ -216,7 +219,6 @@ context.restore();
 
 	dot.x = 500;
 
-	dot.drawCircle();
 }
 
 states["play"] = function()
@@ -225,11 +227,24 @@ states["play"] = function()
 	checkbelow();
 
 	context.drawImage(image,0,0,canvas.width,canvas.height)
+	context.drawImage(ship,player.x - 35,player.y - 50,player.width-25 + 50,player.height + 50)
+
+	for(var i = 0; i < numBalls; i++)
+	{
+		context.drawImage(asteroid, balls[i].x - 25, balls[i].y - 60, ball.width + 20, ball.height)
+	}
+
+	for(var i = 0; i < numSquares; i++)
+	{
+		context.drawImage(emerald, squares[i].x - 25, squares[i].y - 10, 50, 50)
+	}
+
 
 	context.save();
 		context.fillStyle = "white";
 		context.font = "30px Arial"
 		context.fillText("Score: ", 25, 40)
+		context.fillText("Earn 30 points to win!", 700, 40)
 		context.fillText(Score, 120, 40)
 		context.color = "#555555";
 	context.restore();
@@ -344,7 +359,7 @@ states["play"] = function()
 	}
 
 	player.move();
-	player.drawRect();
+	//player.drawRect();
 	console.log(balls[0])
 	for(var i = 0; i < numBalls; i++)
 	{
@@ -353,7 +368,7 @@ states["play"] = function()
 
 		balls[i].vx = 0
 		balls[i].move()
-		balls[i].drawCircle();
+		//balls[i].drawCircle();
 	}
 	for(var i = 0; i < numSquares; i++)
 	{
@@ -361,7 +376,7 @@ states["play"] = function()
 		squares[i].vy *= 0.9
 		squares[i].vx = 0
 		squares[i].move()
-		squares[i].drawRect();
+		//squares[i].drawRect();
 	}
 }
 
@@ -369,6 +384,18 @@ states["play2"] = function()
 {
 
 	context.drawImage(image,0,0,canvas.width,canvas.height)
+
+	context.drawImage(pearl,goal.x - 10,goal.y - 15,goal.width,goal.height - 20)
+
+	context.drawImage(pearl,goal2.x - 15,goal2.y - 13,goal2.width,goal2.height - 25)
+
+	context.save();
+		context.fillStyle = "white";
+		context.font = "30px Arial"
+		context.fillText("Get both pearls to proceed.", canvas.width/2-170, 40)
+		context.color = "#555555";
+	context.restore();
+
 
 	if(w && player2.canJump && player2.vy ==0)
 	{
@@ -488,9 +515,7 @@ states["play2"] = function()
 	player2.drawRect();
 	
 	//Show hit points
-	player2.drawDebug();
-	goal.drawCircle();
-	goal2.drawCircle();
+	//player2.drawDebug();
 }
 
 states["play3"] = function()
@@ -509,6 +534,9 @@ states["play3"] = function()
 	context.lineWidth = 4;
 	context.stroke();
 	context.restore();
+
+
+
 
 
 	if (ball.y < 0 + 30)
@@ -591,13 +619,13 @@ states["play3"] = function()
 	{
 		if(ball.y < player3.y - player3.height/6)
 		{
-			ball.vx = 4;
-			ball.vy = -4;
+			ball.vx = 8;
+			ball.vy = -10;
 		}
 		else if(ball.y > player3.y + player3.height/6)
 		{
-			ball.vx = 4;
-			ball.vy = 4;
+			ball.vx = 8;
+			ball.vy = 10;
 		}
 		else
 		{
@@ -610,13 +638,13 @@ states["play3"] = function()
 	{
 		if(ball.y < player4.y - player4.height/6)
 		{
-			ball.vx = -4;
-			ball.vy = 4;
+			ball.vx = -6;
+			ball.vy = -10;
 		}
 		else if(ball.y > player4.y + player4.height/6)
 		{
-			ball.vx = -4;
-			ball.vy = 4;
+			ball.vx = -6;
+			ball.vy = 10;
 		}
 		else
 		{
@@ -634,6 +662,7 @@ states["play3"] = function()
 	context.font = "20px Georgia";
 	context.fillText("Player 1 | Player 2", 435, 20);
 	context.font = "20px Georgia";
+	context.fillText("Earn 5 points to win.", 800,20)
 	context.fillText("-", 508, 50);
 
 	if (Score >= 5)
@@ -664,6 +693,7 @@ states["play4"] = function()
 	context.fillStyle = "white";
 	context.fillText("Score: ", 50, 50)
 	context.fillText(score, 125, 50)
+	context.fillText("Get 20 hits in a row to win.", 720, 50)
 	context.color = "#555555";
 
 	//Moves the ball
@@ -697,7 +727,7 @@ states["play4"] = function()
 		ball2.y = canvas.height - 50
 	}
 
-	if (score >= 10)
+	if (score >= 20)
 	{
 		changeStates("win");
 	}
