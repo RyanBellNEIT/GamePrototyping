@@ -12,7 +12,7 @@ var timer = setInterval(animate, interval);
 
 var mouse = {x:0,y:0};
 
-var currentState ="play2";
+var currentState ="start";
 var states = [];
 var balls = [];
 var squares = [];
